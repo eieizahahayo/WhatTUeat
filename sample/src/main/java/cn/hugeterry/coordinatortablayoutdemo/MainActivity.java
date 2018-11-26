@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     Context context;
 
-    static final int POLL_INTERVAL = 6000;
+    static final int POLL_INTERVAL = 3000;
     SensorInfo sensorInfo = new SensorInfo();
     SensorManager sensorManager;
     Sensor accelerometerSensor;
