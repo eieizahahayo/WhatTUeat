@@ -1,0 +1,12 @@
+<resources>
+    <string name="title">TU do</string>
+    <string name="app_name">CoordinatorTabLayout</string>
+    <string name="plus">Add</string>
+    <string name="about_author">关于开发者</string>
+    <string name="titleAdd">Enter all the information</string>
+    <string name="inputTitle">Title :</string>
+    <string name="inputInfo">Informations here</string>
+    <string name="textInfo">Description</string>
+    <string name="hintTitle">Title here</string>
+    <string name="hintInfo">Information here</string>
+</resources>
