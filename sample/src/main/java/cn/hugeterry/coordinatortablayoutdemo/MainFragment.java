@@ -1,6 +1,7 @@
 package cn.hugeterry.coordinatortablayoutdemo;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
@@ -26,9 +33,10 @@ public class MainFragment extends Fragment  {
     private final String[] temp = {"Card","Big","Boom"};
     private String area;
 
-    public final String[] chaingRak = {"Shinkansen","Family mart","Seven-eleven","Nana steak house","Sweetduck",
-    "ปังเว้ยเฮ้ย","Gelato","Shinya","So cool","Stake holder","ร้านของทอดใต้ก้ำ","ติ่มซำ fusion","อมรไก่ยำแซ่บ","ข้าวมันไก่ห้าสีป้ามาลี",
-    "Jeffer steak","นายป้อม แล้งแซ่บ","มานีกระเพาะปลา","Dairy store ปังหยาป้าแดง","ข้าวไข่เจียว/ยำ Banyan","Interhouse อาหารคลีน",
+    private DatabaseReference mDatabase;
+
+    public final String[] chaingRak = {
+    "มานีกระเพาะปลา","Dairy store ปังหยาป้าแดง","ข้าวไข่เจียว/ยำ Banyan","Interhouse อาหารคลีน",
     "อาหารตามสั่งใต้อินเตอร์","ครัวมี้","ก๋วยเตี๋ยวเรือยกซด","ใบโมก","ปอาหารตตามสั่งป้าหนู","ข้าวมันไก่ป้ายแดง","กะเพราถาดใต้ก้ำ","Namba","Society",
     "Okoku","ตำแหลก","สุกี้นายพัน","ไก่ย่างห้าดาว","นมสาด","ชาบูลาว","ไข่หวานบ้านซูชิ","ก๋วยเตี๋ยวเรือนายเกรียง","ตำลึง","รสเอก","เมี่บงปลาเผา ป้าบุญเพ็ง",
     "โจ๊ก U-Square","สุขใจหมูกระทะ","ก๋วยเตี๋ยวกระดก","บะหมี่เป็ดหมูกรอบ ข้าวหน้าเป็ด","Shabu Umai","ShabuKu","เกรียงทะเลเผา","นายเกรียงปลาเผา",
@@ -98,8 +106,30 @@ public class MainFragment extends Fragment  {
         }else if(area == "init"){
             initData(init);
         }else{
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("places_chiangrak");
+            Log.v("sapatawajae", String.valueOf(mDatabase));
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String name = dataSnapshot.child("cr12").child("type").toString();
+                    String[] test = new String[50];
+                    int size = 0;
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//                        Log.v("sapatawajae", String.valueOf(postSnapshot.child("name").getValue()));
+                        mDatas.add(String.valueOf(postSnapshot.child("name").getValue()));
+                        test[size] = String.valueOf(postSnapshot);
+                        size++ ;
+                    }
+                    Log.v("sapatawajae", String.valueOf(mDatas));
+//                    initData(test);
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.v("sapatawajae", "yooooo");
+                }
+            });
             initData(doeNot);
-            Log.v("tot", "nowhere");
+
         }
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
@@ -107,6 +137,14 @@ public class MainFragment extends Fragment  {
 
         return v;
     }
+
+//    public View onStart() {
+//        super.onStart();
+//
+//
+//    }
+
+
 
     private void initData(String[] input) {
         mDatas = new ArrayList<>();

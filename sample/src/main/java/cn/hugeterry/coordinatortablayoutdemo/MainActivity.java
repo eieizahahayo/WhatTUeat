@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String check = "init";
 
 
+
+
     Context context;
 
     static final int POLL_INTERVAL = 3000;
