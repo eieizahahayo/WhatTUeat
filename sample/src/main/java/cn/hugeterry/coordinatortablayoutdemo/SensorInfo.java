@@ -76,7 +76,7 @@ class SensorInfo {
                     viewDialog.setMessage("ร้านอาหารที่ได้ " + mFragments.hospital[index]);
 
                 }else if(area == "golfview"){
-                    index = (int)(Math.random() * (mFragments.golf.length - 1));
+//                    index = (int)(Math.random() * (mFragments.golf.length - 1));
                     viewDialog.setTitle("สถานที่ " + area);
                     viewDialog.setMessage("ร้านอาหารที่ได้ " + mFragments.chaingRak[index]);
 

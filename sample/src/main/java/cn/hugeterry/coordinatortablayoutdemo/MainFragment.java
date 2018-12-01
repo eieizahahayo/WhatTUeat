@@ -32,6 +32,7 @@ public class MainFragment extends Fragment  {
     private String mTitle;
     private final String[] temp = {"Card","Big","Boom"};
     private String area;
+    private FirebaseRetreiving test = new FirebaseRetreiving();
 
     private DatabaseReference mDatabase;
 
@@ -48,7 +49,6 @@ public class MainFragment extends Fragment  {
     public final String[] tuDome = {"ตลาดนัด TU dome" , "ศูนย์อาหาร TU dome" , "KFC" , "MK" , "Yayoi" , "Seven-eleven","S&P"};
     public final String[] vanStation = {"Yakishi yakiniku","โรงอาหารคณะวิศวกรรมศาสตร์","Tomodachi","Sydney steak TU","อ๋องข้าวผัดปู","ร้านนายโอ๋เตี๋ยวต้มยำไข่"};
     public final String[] hospital = {"Pepper lunch","ศูนย์อาหารโรงพยาบาลธรรมศาสตร์","KFC","Starbuck","D'Oro","Black canyon","Seven-eleven","โรงอาหารคณะแพทยศาสตร์"};
-    public final String[] golf = {"Seven-eleven","โรงอาหารกอล์ฟวิว"};
     public final String[] init = {"เดินเพื่อ tune GPS หน่อยจ้า"};
     public final String[] doeNot = {"ไม่มีร้านอาหารใกล้เคียง","ลองเดินหาดูสิ"};
 
@@ -75,7 +75,7 @@ public class MainFragment extends Fragment  {
         Bundle bundle = getArguments();
         mTitle = bundle.getString(ARG_TITLE);
         area = bundle.getString(areaFrag);
-        Log.v("tot", "[area] " + area);
+//        Log.v("tot", "[area] " + area);
 
         if(area == "chiangRak"){
             initData(chaingRak);
@@ -101,36 +101,17 @@ public class MainFragment extends Fragment  {
         }
         else if(area == "hospital"){
             initData(hospital);
-        }else if(area == "golfview"){
-            initData(golf);
-        }else if(area == "init"){
+        }
+        else if(area == "init"){
             initData(init);
         }else{
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("places_chiangrak");
-            Log.v("sapatawajae", String.valueOf(mDatabase));
-            mDatabase.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String name = dataSnapshot.child("cr12").child("type").toString();
-                    String[] test = new String[50];
-                    int size = 0;
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                        Log.v("sapatawajae", String.valueOf(postSnapshot.child("name").getValue()));
-                        mDatas.add(String.valueOf(postSnapshot.child("name").getValue()));
-                        test[size] = String.valueOf(postSnapshot);
-                        size++ ;
-                    }
-                    Log.v("sapatawajae", String.valueOf(mDatas));
-//                    initData(test);
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.v("sapatawajae", "yooooo");
-                }
-            });
-            initData(doeNot);
-
+            setData("places_chiangrak");
+//            initData(doeNot);
+            Log.v("sapatawajae", "test");
+            initData(test.test);
         }
+        Log.v("sapatawajae", "recycle");
+//        Log.v("sapatawajae", String.valueOf(mDatas));
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         mRecyclerView.setAdapter(new RecyclerAdapter(mRecyclerView.getContext(), mDatas));
@@ -138,10 +119,48 @@ public class MainFragment extends Fragment  {
         return v;
     }
 
-//    public View onStart() {
+
+    private void setData(String input){
+        mDatas = new ArrayList<>();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(input);
+//            Log.v("sapatawajae", "setData");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("cr12").child("type").toString();
+//                    String[] test = new String[50];
+//                    int size = 0;
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//                        Log.v("sapatawajae", String.valueOf(postSnapshot.child("name").getValue()));
+                    mDatas.add(String.valueOf(postSnapshot.child("name").getValue()));
+//                        test[size] = String.valueOf(postSnapshot);
+//                        size++ ;
+//                    Log.v("sapatawajae","onDataChange");
+                }
+                Log.v("sapatawajae", String.valueOf(mDatas));
+//                    initData(test);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.v("sapatawajae", "yooooo");
+            }
+        });
+    }
+
+//    public View onStart(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        super.onStart();
+//        Log.v("sapatawajae","onStart");
 //
+//        View v = inflater.inflate(R.layout.fragment_main, container, false);
+//        Bundle bundle = getArguments();
+//        mTitle = bundle.getString(ARG_TITLE);
+//        area = bundle.getString(areaFrag);
 //
+//        mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
+//        mRecyclerView.setAdapter(new RecyclerAdapter(mRecyclerView.getContext(), mDatas));
+//
+//        return v;
 //    }
 
 

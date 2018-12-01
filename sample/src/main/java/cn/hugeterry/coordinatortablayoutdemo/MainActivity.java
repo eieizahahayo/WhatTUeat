@@ -25,6 +25,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
@@ -205,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         Log.v("tot", "[main] nowhere");
                     }
                 }
-
             }
 
             @Override
@@ -234,6 +239,36 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 configureButton();
             }
         }
+
+
+            DatabaseReference mDatabase;
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("places_chiangrak");
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    String name = dataSnapshot.child("cr12").child("type").toString();
+                    final AlertDialog.Builder viewDialog = new AlertDialog.Builder(context);
+                    viewDialog.setTitle("ขอต้อนรับสู่ What TU eat");
+                    int size = 0;
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//                        Log.v("sapatawajae", String.valueOf(postSnapshot.child("name").getValue()));
+//                    mDatas.add(String.valueOf(postSnapshot.child("name").getValue()));
+//                        test[size] = String.valueOf(postSnapshot);
+//                        test[size] = String.valueOf(postSnapshot.child("name").getValue());
+                        viewDialog.setMessage(String.valueOf(dataSnapshot.child("cr12").child("name").getValue()));
+                        size++ ;
+//                    Log.v("sapatawajae","onDataChange");
+                    }
+//                    viewDialog.setMessage(dataSnapshot.child(""))
+                    Log.v("sapatawajae", "retrieve");
+                    viewDialog.show();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.v("sapatawajae", "yooooo");
+                }
+            });
+
     }
 
 //    public void showDialog() {
