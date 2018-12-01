@@ -41,18 +41,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ArrayList<Fragment> mFragments;
     private final String[] mTitles = {"Nearby restaurants"};
     private ViewPager mViewPager;
-
     private LocationManager locationManager;
     private LocationListener locationListener;
-
     private String setArea = "init";
     private String check = "init";
-
-
-
-
     Context context;
-
     static final int POLL_INTERVAL = 3000;
     SensorInfo sensorInfo = new SensorInfo();
     SensorManager sensorManager;
@@ -88,9 +81,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             Toast.makeText(MainActivity.this, "ลองเขย่าดู", Toast.LENGTH_LONG).show();
         }
 
+        final AlertDialog.Builder viewDialog = new AlertDialog.Builder(context);
+        viewDialog.setTitle("ขอต้อนรับสู่ What TU eat");
+        viewDialog.setMessage("วิธีการใช้งาน\n" +
+                "1. เดินเพื่อระบุตำแหน่ง\n" +
+                "2. เขย่าเพื่อสุ่มร้านอาหาร\n\n" +
+                " \t*เมื่อระบุตำแหน่งได้แล้วหน้าจอจะแสดงรายชื่อร้านอาหาร\n" );
+        viewDialog.show();
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
-
             @Override
             public void onLocationChanged(Location location) {
                 if(location.getLatitude() < 14.067407 && location.getLatitude() > 14.065023 && location.getLongitude() < 100.613721 && location.getLongitude() > 100.605179 ){
@@ -239,56 +238,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 configureButton();
             }
         }
-
-
-            DatabaseReference mDatabase;
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("places_chiangrak");
-            mDatabase.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    String name = dataSnapshot.child("cr12").child("type").toString();
-                    final AlertDialog.Builder viewDialog = new AlertDialog.Builder(context);
-                    viewDialog.setTitle("ขอต้อนรับสู่ What TU eat");
-                    int size = 0;
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                        Log.v("sapatawajae", String.valueOf(postSnapshot.child("name").getValue()));
-//                    mDatas.add(String.valueOf(postSnapshot.child("name").getValue()));
-//                        test[size] = String.valueOf(postSnapshot);
-//                        test[size] = String.valueOf(postSnapshot.child("name").getValue());
-                        viewDialog.setMessage(String.valueOf(dataSnapshot.child("cr12").child("name").getValue()));
-                        size++ ;
-//                    Log.v("sapatawajae","onDataChange");
-                    }
-//                    viewDialog.setMessage(dataSnapshot.child(""))
-                    Log.v("sapatawajae", "retrieve");
-                    viewDialog.show();
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.v("sapatawajae", "yooooo");
-                }
-            });
-
     }
-
-//    public void showDialog() {
-//        if (!shown_dialog) {
-//            shown_dialog = true;
-//            final AlertDialog.Builder viewDialog = new AlertDialog.Builder(this);
-//            viewDialog.setIcon(android.R.drawable.btn_star_big_on);
-//            viewDialog.setTitle("Loading");
-//            viewDialog.setMessage("Please wait ...");
-//            viewDialog.setPositiveButton("OK",
-//                new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                        shown_dialog = false;
-//                    }
-//                });
-//                viewDialog.show();
-//            }
-//    }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode,String[] permissions, int[] grantResults){
@@ -327,13 +277,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume() {
         super.onResume();
-
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
         sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
         hdr.postDelayed(pollTask, POLL_INTERVAL);
-
     }
 
     @Override
@@ -343,7 +290,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
-
             sensorInfo.setSensor(x, y, z, check);
         }
     }
