@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private LocationListener locationListener;
     private String setArea = "init";
     private String check = "init";
+    private String child = "init";
     Context context;
     static final int POLL_INTERVAL = 3000;
     SensorInfo sensorInfo = new SensorInfo();
@@ -65,9 +66,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-
-//        initFragments();
-//        initViewPager();
         mImageArray = new int[]{
                 R.mipmap.bg_cb};
         mColorArray = new int[]{
@@ -93,20 +91,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onLocationChanged(Location location) {
                 if(location.getLatitude() < 14.067407 && location.getLatitude() > 14.065023 && location.getLongitude() < 100.613721 && location.getLongitude() > 100.605179 ){
-                    if(check != "chiangRak"){
-                        setArea("chiangRak");
-                        check = "chiangRak";
+                    if(check != "places_chiangrak"){
+                        setArea("places_chiangrak");
+                        check = "places_chiangrak";
+                        child = "cr";
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
-                                .setTitle("Chiang rak area")
+                                .setTitle("Chiangrak area")
                                 .setImageArray(mImageArray, mColorArray)
                                 .setupWithViewPager(mViewPager);
                     }
                 }else if(location.getLatitude() < 14.070265 && location.getLatitude() > 14.064944 && location.getLongitude() < 100.602783 && location.getLongitude() > 100.597374){
-                    if(check != "tuDome"){
-                        setArea("tuDome");
-                        check = "tuDome";
+                    if(check != "places_tudome"){
+                        setArea("places_tudome");
+                        check = "places_tudome";
+                        child = "tu";
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -115,9 +115,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 .setupWithViewPager(mViewPager);
                     }
                 }else if(location.getLatitude() < 14.071980 && location.getLatitude() > 14.070031 && location.getLongitude() < 100.605422 && location.getLongitude() > 100.601711){
-                    if(check != "sc"){
-                        setArea("sc");
-                        check = "sc";
+                    if(check != "places_sc"){
+                        setArea("places_sc");
+                        check = "places_sc";
+                        child = "sc";
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -127,9 +128,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     }
 
                 }else if(location.getLatitude() < 14.070095 && location.getLatitude() > 14.067502 && location.getLongitude() < 100.610126 && location.getLongitude() > 100.605554){
-                    if(check != "vanStation"){
-                        setArea("vanStation");
-                        check = "vanStation";
+                    if(check != "places_vanStation"){
+                        setArea("places_vanStation");
+                        check = "places_vanStation";
+                        child = "vs";
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -138,9 +140,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 .setupWithViewPager(mViewPager);
                     }
                 }else if(location.getLatitude() < 14.074720 && location.getLatitude() > 14.071236 && location.getLongitude() < 100.602760 && location.getLongitude() > 100.598996){
-                    if(check != "greenCanteen"){
-                        setArea("greenCanteen");
-                        check = "greenCanteen";
+                    if(check != "places_greenCanteen"){
+                        setArea("places_greenCanteen");
+                        check = "places_greenCanteen";
+                        child = "gc";
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
                                 .setTitle("Green canteen area")
                                 .setImageArray(mImageArray, mColorArray)
@@ -151,9 +154,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         initViewPager();
                     }
                 }else if(location.getLatitude() < 14.074761 && location.getLatitude() > 14.07211 && location.getLongitude() < 100.610103 && location.getLongitude() > 100.601658){
-                    if(check != "vitya"){
-                        check = "vitya";
-                        setArea("vitya");
+                    if(check != "places_vitya"){
+                        check = "places_vitya";
+                        setArea("places_vitya");
+                        child = "vy";
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -164,9 +168,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
                     }
                 }else if(location.getLatitude() < 14.075099 && location.getLatitude() > 14.072296 && location.getLongitude() < 100.616243 && location.getLongitude() > 100.610589){
-                    if(check != "hospital"){
-                        setArea("hospital");
-                        check = "hospital";
+                    if(check != "places_hospital"){
+                        setArea("places_hospital");
+                        check = "places_hospital";
+                        child = "ho";
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -175,9 +180,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 .setupWithViewPager(mViewPager);
                     }
                 }else if(location.getLatitude() < 14.078559 && location.getLatitude() > 14.076078 && location.getLongitude() < 100.600240 && location.getLongitude() > 100.59408){
-                    if(check != "tiewson"){
-                        setArea("tiewson");
-                        check = "tiewson";
+                    if(check != "places_tiewson"){
+                        setArea("places_tiewson");
+                        check = "places_tiewson";
+                        child = "ts";
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -185,22 +191,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 .setImageArray(mImageArray, mColorArray)
                                 .setupWithViewPager(mViewPager);
                     }
-                }else if(location.getLatitude() < 14.062904 && location.getLatitude() > 14.060295 && location.getLongitude() < 100.598497 && location.getLongitude() > 100.595938 ){
-                    if(check != "golfview"){
-                        setArea("golfview");
-                        check = "golfview";
-                        initFragments();
-                        initViewPager();
-                        mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
-                                .setTitle("Golf view area")
-                                .setImageArray(mImageArray, mColorArray)
-                                .setupWithViewPager(mViewPager);
-
-                    }
                 }else{
-                    if(check != "card"){
-                        setArea("card");
-                        check = "card";
+                    if(check != "places_nowhere"){
+                        setArea("places_nowhere");
+                        check = "places_nowhere";
+                        child = "text";
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -290,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
-            sensorInfo.setSensor(x, y, z, check);
+            sensorInfo.setSensor(x, y, z, check,child);
         }
     }
 

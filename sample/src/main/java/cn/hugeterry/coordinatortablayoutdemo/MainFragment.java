@@ -32,7 +32,6 @@ public class MainFragment extends Fragment  {
     private String mTitle;
     private final String[] temp = {"Card","Big","Boom"};
     private String area;
-    private FirebaseRetreiving test = new FirebaseRetreiving();
 
     private DatabaseReference mDatabase;
 
@@ -64,9 +63,6 @@ public class MainFragment extends Fragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Bundle bundle = getArguments();
-//        mTitle = bundle.getString(ARG_TITLE);
-//        area = bundle.getString(areaFrag);
     }
 
     @Override
@@ -75,95 +71,43 @@ public class MainFragment extends Fragment  {
         Bundle bundle = getArguments();
         mTitle = bundle.getString(ARG_TITLE);
         area = bundle.getString(areaFrag);
-//        Log.v("tot", "[area] " + area);
 
-        if(area == "chiangRak"){
+        if(area == "places_chiangrak"){
             initData(chaingRak);
         }
-        else if(area == "vitya"){
+        else if(area == "places_vitya"){
             initData(vitya);
             Log.v("tot", "sci");
         }
-        else if(area == "greenCanteen"){
+        else if(area == "places_greenCanteen"){
             initData(greenCanteen);
         }
-        else if(area == "sc"){
+        else if(area == "places_sc"){
             initData(sc);
         }
-        else if(area == "tiewson"){
+        else if(area == "places_tiewson"){
             initData(tiewson);
         }
-        else if(area == "tuDome"){
+        else if(area == "places_tudome"){
             initData(tuDome);
         }
-        else if(area == "vanStation"){
+        else if(area == "places_vanStation"){
             initData(vanStation);
         }
-        else if(area == "hospital"){
+        else if(area == "places_hospital"){
             initData(hospital);
         }
         else if(area == "init"){
             initData(init);
         }else{
-            setData("places_chiangrak");
-//            initData(doeNot);
-            Log.v("sapatawajae", "test");
-            initData(test.test);
+            initData(doeNot);
         }
-        Log.v("sapatawajae", "recycle");
-//        Log.v("sapatawajae", String.valueOf(mDatas));
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         mRecyclerView.setAdapter(new RecyclerAdapter(mRecyclerView.getContext(), mDatas));
 
         return v;
     }
-
-
-    private void setData(String input){
-        mDatas = new ArrayList<>();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child(input);
-//            Log.v("sapatawajae", "setData");
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("cr12").child("type").toString();
-//                    String[] test = new String[50];
-//                    int size = 0;
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                        Log.v("sapatawajae", String.valueOf(postSnapshot.child("name").getValue()));
-                    mDatas.add(String.valueOf(postSnapshot.child("name").getValue()));
-//                        test[size] = String.valueOf(postSnapshot);
-//                        size++ ;
-//                    Log.v("sapatawajae","onDataChange");
-                }
-                Log.v("sapatawajae", String.valueOf(mDatas));
-//                    initData(test);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.v("sapatawajae", "yooooo");
-            }
-        });
-    }
-
-//    public View onStart(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        super.onStart();
-//        Log.v("sapatawajae","onStart");
-//
-//        View v = inflater.inflate(R.layout.fragment_main, container, false);
-//        Bundle bundle = getArguments();
-//        mTitle = bundle.getString(ARG_TITLE);
-//        area = bundle.getString(areaFrag);
-//
-//        mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
-//        mRecyclerView.setAdapter(new RecyclerAdapter(mRecyclerView.getContext(), mDatas));
-//
-//        return v;
-//    }
-
-
 
     private void initData(String[] input) {
         mDatas = new ArrayList<>();
