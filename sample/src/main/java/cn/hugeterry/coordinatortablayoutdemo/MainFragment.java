@@ -32,22 +32,8 @@ public class MainFragment extends Fragment  {
     private String mTitle;
     private final String[] temp = {"Card","Big","Boom"};
     private String area;
-
-    public final String[] chaingRak = {
-    "มานีกระเพาะปลา","Dairy store ปังหยาป้าแดง","ข้าวไข่เจียว/ยำ Banyan","Interhouse อาหารคลีน",
-    "อาหารตามสั่งใต้อินเตอร์","ครัวมี้","ก๋วยเตี๋ยวเรือยกซด","ใบโมก","ปอาหารตตามสั่งป้าหนู","ข้าวมันไก่ป้ายแดง","กะเพราถาดใต้ก้ำ","Namba","Society",
-    "Okoku","ตำแหลก","สุกี้นายพัน","ไก่ย่างห้าดาว","นมสาด","ชาบูลาว","ไข่หวานบ้านซูชิ","ก๋วยเตี๋ยวเรือนายเกรียง","ตำลึง","รสเอก","เมี่บงปลาเผา ป้าบุญเพ็ง",
-    "โจ๊ก U-Square","สุขใจหมูกระทะ","ก๋วยเตี๋ยวกระดก","บะหมี่เป็ดหมูกรอบ ข้าวหน้าเป็ด","Shabu Umai","ShabuKu","เกรียงทะเลเผา","นายเกรียงปลาเผา",
-    "ย่างเนย","ชาบูบู๋ตึ๋ง","นมหวาน"};
-    public final String[] vitya = {"โรงอาหารคณะวิทยาศาสตร์","ร้านกาแฟบร.2","Seven-eleven","ร้านยำยูป้า","Urbie"};
-    public final String[] sc = {"โรงอาหาร SC","โรงอาหารคณะบัญชี","โรงอาหารนิติศาสตร์","Dairy Queen","Seven-eleven","Hotto bun"};
-    public final String[] greenCanteen = {"โรงอาหารกรีนแคนทีน","Swensen","Salmon king","ไก่ย่างห้าดาว","โรงอาหารโต้รุ่ง","กาแฟหอมกรุ่น","Starbuck","Urbie"};
-    public final String[] tiewson = {"โรงอาหารทิวสน","ตลาดนัดอินเตอร์โซน","Top super market","Seven-eleven"};
-    public final String[] tuDome = {"ตลาดนัด TU dome" , "ศูนย์อาหาร TU dome" , "KFC" , "MK" , "Yayoi" , "Seven-eleven","S&P"};
-    public final String[] vanStation = {"Yakishi yakiniku","โรงอาหารคณะวิศวกรรมศาสตร์","Tomodachi","Sydney steak TU","อ๋องข้าวผัดปู","ร้านนายโอ๋เตี๋ยวต้มยำไข่"};
-    public final String[] hospital = {"Pepper lunch","ศูนย์อาหารโรงพยาบาลธรรมศาสตร์","KFC","Starbuck","D'Oro","Black canyon","Seven-eleven","โรงอาหารคณะแพทยศาสตร์"};
-    public final String[] init = {"เดินเพื่อ tune GPS หน่อยจ้า"};
-    public final String[] doeNot = {"ไม่มีร้านอาหารใกล้เคียง","ลองเดินหาดูสิ"};
+    private FirebaseRetreiving firebase;
+    private String child;
 
     public static MainFragment getInstance(String title, String arearea) {
         MainFragment fra = new MainFragment();
@@ -69,41 +55,58 @@ public class MainFragment extends Fragment  {
         Bundle bundle = getArguments();
         mTitle = bundle.getString(ARG_TITLE);
         area = bundle.getString(areaFrag);
+        firebase = new FirebaseRetreiving();
 
         if(area == "places_chiangrak"){
-            initData(chaingRak);
+            child = "cr";
+            initData(firebase.chaingRak);
+            firebase.FirebaseRetreiving("places_chiangrak",child);
         }
         else if(area == "places_vitya"){
-            initData(vitya);
-            Log.v("tot", "sci");
+            child = "vy";
+            initData(firebase.vitya);
+            firebase.FirebaseRetreiving("places_vitya",child);
         }
         else if(area == "places_greenCanteen"){
-            initData(greenCanteen);
+            child = "gc";
+            initData(firebase.greenCanteen);
+            firebase.FirebaseRetreiving("places_greenCanteen",child);
         }
         else if(area == "places_sc"){
-            initData(sc);
+            child = "sc";
+            initData(firebase.sc);
+            firebase.FirebaseRetreiving("places_sc",child);
         }
         else if(area == "places_tiewson"){
-            initData(tiewson);
+            child = "ts";
+            initData(firebase.tiewson);
+            firebase.FirebaseRetreiving("places_tiewson",child);
         }
         else if(area == "places_tudome"){
-            initData(tuDome);
+            child = "tu";
+            initData(firebase.tuDome);
+            firebase.FirebaseRetreiving("places_tudome",child);
         }
         else if(area == "places_vanStation"){
-            initData(vanStation);
+            child = "vs";
+            initData(firebase.vanStation);
+            firebase.FirebaseRetreiving("places_vanStation",child);
         }
         else if(area == "places_hospital"){
-            initData(hospital);
+            child = "ho";
+            initData(firebase.hospital);
+            firebase.FirebaseRetreiving("places_hospital",child);
         }
         else if(area == "init"){
-            initData(init);
+            initData(firebase.init);
         }else{
-            initData(doeNot);
+            child = "text";
+            initData(firebase.doeNot);
+            firebase.FirebaseRetreiving("places_nowhere",child);
         }
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         mRecyclerView.setAdapter(new RecyclerAdapter(mRecyclerView.getContext(), mDatas));
-
         return v;
     }
 

@@ -2,8 +2,6 @@ package cn.hugeterry.coordinatortablayoutdemo;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -21,15 +19,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -66,18 +55,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-        mImageArray = new int[]{
-                R.mipmap.bg_cb};
         mColorArray = new int[]{
                 android.R.color.holo_green_light};
         mCoordinatorTabLayout = (CoordinatorTabLayout) findViewById(R.id.coordinatortablayout);
         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
-                .setTitle("What TU eat")
-                .setImageArray(mImageArray, mColorArray)
-                .setupWithViewPager(mViewPager);
-        for (int i = 0; i < 4; i++) {
-            Toast.makeText(MainActivity.this, "ลองเขย่าดู", Toast.LENGTH_LONG).show();
-        }
+                .setTitle("What TU eat");
+
 
         final AlertDialog.Builder viewDialog = new AlertDialog.Builder(context);
         viewDialog.setTitle("ขอต้อนรับสู่ What TU eat");
@@ -95,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         setArea("places_chiangrak");
                         check = "places_chiangrak";
                         child = "cr";
+                        mImageArray = new int[]{
+                                R.mipmap.chiangrak};
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -107,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         setArea("places_tudome");
                         check = "places_tudome";
                         child = "tu";
+                        mImageArray = new int[]{
+                                R.mipmap.tudome};
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -119,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         setArea("places_sc");
                         check = "places_sc";
                         child = "sc";
+                        mImageArray = new int[]{
+                                R.mipmap.sc};
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -132,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         setArea("places_vanStation");
                         check = "places_vanStation";
                         child = "vs";
+                        mImageArray = new int[]{
+                                R.mipmap.van_station};
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -144,11 +135,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         setArea("places_greenCanteen");
                         check = "places_greenCanteen";
                         child = "gc";
+                        mImageArray = new int[]{
+                                R.mipmap.green_canteen};
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
                                 .setTitle("Green canteen area")
                                 .setImageArray(mImageArray, mColorArray)
                                 .setupWithViewPager(mViewPager);
-                        Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
 
                         initFragments();
                         initViewPager();
@@ -158,6 +150,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         check = "places_vitya";
                         setArea("places_vitya");
                         child = "vy";
+                        mImageArray = new int[]{
+                                R.mipmap.vitya};
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -165,13 +159,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                 .setImageArray(mImageArray, mColorArray)
                                 .setupWithViewPager(mViewPager);
                         Log.v("tot", "[main] sci");
-                        Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG).show();
+
                     }
                 }else if(location.getLatitude() < 14.075099 && location.getLatitude() > 14.072296 && location.getLongitude() < 100.616243 && location.getLongitude() > 100.610589){
                     if(check != "places_hospital"){
                         setArea("places_hospital");
                         check = "places_hospital";
                         child = "ho";
+                        mImageArray = new int[]{
+                                R.mipmap.hospital};
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -184,6 +180,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         setArea("places_tiewson");
                         check = "places_tiewson";
                         child = "ts";
+                        mImageArray = new int[]{
+                                R.mipmap.tiewson};
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
@@ -196,6 +194,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         setArea("places_nowhere");
                         check = "places_nowhere";
                         child = "text";
+                        mImageArray = new int[]{
+                                R.mipmap.bg_cb};
                         initFragments();
                         initViewPager();
                         mCoordinatorTabLayout.setTranslucentStatusBar(MainActivity.this)
