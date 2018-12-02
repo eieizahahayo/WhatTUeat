@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String setArea = "init";
     private String check = "init";
     private String child = "init";
-    Context context;
     static final int POLL_INTERVAL = 3000;
+    Context context;
     SensorInfo sensorInfo = new SensorInfo();
     SensorManager sensorManager;
     Sensor accelerometerSensor;

@@ -33,8 +33,6 @@ public class MainFragment extends Fragment  {
     private final String[] temp = {"Card","Big","Boom"};
     private String area;
 
-    private DatabaseReference mDatabase;
-
     public final String[] chaingRak = {
     "มานีกระเพาะปลา","Dairy store ปังหยาป้าแดง","ข้าวไข่เจียว/ยำ Banyan","Interhouse อาหารคลีน",
     "อาหารตามสั่งใต้อินเตอร์","ครัวมี้","ก๋วยเตี๋ยวเรือยกซด","ใบโมก","ปอาหารตตามสั่งป้าหนู","ข้าวมันไก่ป้ายแดง","กะเพราถาดใต้ก้ำ","Namba","Society",
